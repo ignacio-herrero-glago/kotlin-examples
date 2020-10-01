@@ -9,11 +9,11 @@ fun main() {
 
     elvisOperator()
 
+    safeCasts()
+
     notNullAssertion()
 
 }
-
-
 
 /************************************************************************************************************/
 
@@ -78,4 +78,33 @@ fun notNullAssertion() {
     // Lanza KotlinNullPointerExcepcion
     s2!!
 
+}
+
+fun safeCasts() {
+
+    // 1. Check type (is) and cast (as)
+    val any1 : String = "text1"
+    if (any1 is String) {
+        val s = any1 as String
+        // String methods can be used
+        println("Upper case: ${s.toUpperCase()}")
+    }
+    
+    // 2. Smart cast, so not needed
+    val any2 : String = "text2"
+    if (any2 is String) {
+        // String methods can be used
+        println("Upper case: ${any2.toUpperCase()}")
+    }
+
+    // 3. as? operator
+    // "x as? Type" devuelve "x as Type" si x es de tipo Type y "null" si x no es de tipo Type
+    // Ejemplo: diferencia as y as?
+    // - x as? Int -> devuelve null si x no es un Int
+    // - x as Int -> devuelve ClassCastException si x no es un Int
+    val any3 : String = "text3"
+    val any4 : String? = null
+    val result3 = (any3 as? String)?.toUpperCase()
+    val result4 = (any4 as? String)?.toUpperCase()
+    println("Upper case any3, any4: $result3, $result4")
 }
