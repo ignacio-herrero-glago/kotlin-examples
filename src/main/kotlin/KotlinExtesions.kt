@@ -37,5 +37,7 @@ fun extensionFunctions() {
     println("Extension or member for string $cadena1... $extensionOrMember1")
     println("Extension or member for string $cadena1... $extensionOrMember2")
 
+    println("Check empty or null for $cadena1... ${cadena1.isEmptyOrNull()}")
+
 }
 

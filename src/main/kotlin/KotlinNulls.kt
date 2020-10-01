@@ -22,6 +22,10 @@ fun nullVariables() {
     //val variable2 : String = null -> ya no da nullPointerException, da error de compilación
     val variable2 : String? = null // con la ? indicamos que es nula, y el tipo de la variable es String?
 
+    // Ejemplos mas complejos de listas
+    val listaEnterosONulos : List<Int?> // lista de enteros que pueden ser nulos
+    val listaEnterosNula : List<Int>? // lista de enteros que puede ser nula, pero si no lo es, no puede tener nulos
+
     val length1 : Int = variable1.length
     val length2a : Int = if (variable2 != null) variable2.length else 0
     //val length2b : Int = variable2.length -> error compilacion

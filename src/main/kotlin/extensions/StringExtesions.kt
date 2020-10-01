@@ -4,6 +4,10 @@ package main.kotlin.extensions
  * Extiende la clase String con más funciones
  */
 
+// El 'String' inicial se llama receiver
+// Esta extension función es el equivalente a un método estático en Java:
+// String.funcion() : Boolean -> public static Boolean funcion(String s);
+// el uso de 'this' referencia al receiver que llega como parámetro al método estático
 fun String.lastChar() = this.get(this.length-1)
 
 fun String.countChars() = this.length
@@ -29,4 +33,6 @@ fun String.get(index : Int) = "*"
 
 // Esta extensión no coindice con el member 'get' de String, porque tiene 2 parámetros, así que sí se usa
 fun String.get(index : Int, last : String) = "*"
+
+fun String?.isEmptyOrNull() : Boolean = this == null || this.isEmpty()
 
