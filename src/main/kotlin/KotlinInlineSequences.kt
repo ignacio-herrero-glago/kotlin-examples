@@ -14,7 +14,6 @@ fun main() {
 }
 
 
-
 /************************************************************************************************************/
 
 /**
@@ -82,9 +81,9 @@ fun collectionsAndSequences() {
     }
     val miSecuenciaNumerosSeguidosDesde = generateSequence(7) {
         // Esta funcion indica como generar el siguiente
-        next ->
-            print(".")
-            next + 1
+            next ->
+        print(".")
+        next + 1
     }
     // Es infinita si la llamamos
     print("miSecuenciaRandom: ")
@@ -92,8 +91,6 @@ fun collectionsAndSequences() {
     // Empezará por 7
     print("miSecuenciaNumerosSeguidosDesde: ")
     println(miSecuenciaNumerosSeguidosDesde.take(5).toList())
-
-
 
 
 }
@@ -105,7 +102,7 @@ fun yields() {
 
     // 1. Iterable: es un tipo de dato que permite que se itere sobre el
     // -> lo malo de una lista es que si es enorme y hay que procesarla, es necesario tenerla completa en memoria
-    val datoIterable = listOf<Int>(1,2,3,4,5,6,7,8,9,10)
+    val datoIterable = listOf<Int>(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     println("Iterable: ")
     for (i in datoIterable)
         print(i)
@@ -138,7 +135,7 @@ fun yields() {
     // - la funcion se ejecuta hasta yield, y ahí queda pausada hasta que vuelve a invocarse, en cuyo caso continúa desde ese punto
     // "You can think of yield() as "return, and next time start from where you stopped"
     fun funcionConYield() = sequence {
-        var x : Int = 1
+        var x: Int = 1
         // Aqui vamos devolviendo i y suspendemos la ejecucion; si se invoca de nuevo, se continua desde el yield
         while (true) {
             yield(x)
@@ -183,10 +180,10 @@ fun yields() {
         yieldAll(2..9)
         // No se ejecutará con la llamada que haremos
         println("   (tercera llamada...)")
-        yieldAll(listOf(10,20,30))
+        yieldAll(listOf(10, 20, 30))
     }
     println("Yield secuenciaNumeros: ")
-    println(secuenciaNumeros().map{ it * it }.filter { it > 30 }.take(3).toList())
+    println(secuenciaNumeros().map { it * it }.filter { it > 30 }.take(3).toList())
 
     // Fibonacci como secuencia
     val secuenciaFibonacci = sequence<Int> {
@@ -197,7 +194,7 @@ fun yields() {
         // f(1) = 1
         yield(b)
 
-        while(true) {
+        while (true) {
             // f(n) = f(n-1) + f(n-2)
             val c = b + a
             yield(c)
@@ -208,18 +205,14 @@ fun yields() {
     println("secuenciaFibonacci: ")
     println(secuenciaFibonacci.take(10).toList())
 
-
-
     // 5. Courutine: es una función con uno o más puntos de suspensión
     // En Kotlin, las courutines se definen con la palabra suspend
     // Ejemplo yield: "public abstract suspend fun yield(value: T)"
     // Solo se pueden llamar desde otra courutine/suspend function
-    suspend fun miCourutine(paramtero : String) {
+    suspend fun miCourutine(paramtero: String) {
         val cadena1 = "saludar"
         val cadena2 = "hola"
     }
 
 }
-
-
 
