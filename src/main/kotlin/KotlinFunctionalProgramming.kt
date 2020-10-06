@@ -11,6 +11,12 @@ fun main() {
 
     funcionesComunesCollections()
 
+    functionTypes()
+
+    memberReferences()
+
+    boundUnboundReferences()
+
 }
 
 
@@ -66,6 +72,10 @@ fun funcionesComunesCollections() {
     // Map
     println("Map ages: ${listaPersonas.map { it.age }}")
 
+    // Maxby
+    println("Older person: ${listaPersonas.maxBy { it.age }?.name}")
+
+
     // Filter
     println("People from Valencia: ${listaPersonas.filter { it.ciudad == "Valencia" }}")
 
@@ -96,10 +106,70 @@ fun funcionesComunesCollections() {
 
     // Flatmap
     // - combina map y luego flatten
-    // map -> paso de un nombre a una lista de letras
-    // flatten paso de una lista de listas, a una sola
+    // map -> paso de un nombre a una lista de letras (es la funcion que le pasas al flatmap)
+    // flatten -> simepre aplana, pasa de una lista de listas, a una sola
     val namesList: List<String> = listOf<String>("Pepe", "Juan", "Ana", "Mario")
     val lista: List<Char> = namesList.flatMap { name -> name.toList() }
     println("List of letters: $lista")
+
+}
+
+fun functionTypes() {
+
+    // Lambda en una variable
+    val lambdaSum: (Int, Int) -> Int = { x : Int, y : Int -> x + y }
+    val lambdaIsEven: (Int) -> Boolean = { x : Int -> x % 2 == 0 }
+
+    // Puede aplicarse directamente
+    println("Sum 2 numbers: 5 + 7 = ${lambdaSum(5, 7)}")
+
+    // Puede pasarse como argumento
+    val listaNumeros: List<Int> = listOf<Int>(1,3,5,7,9)
+    println("Any even number in list $listaNumeros?... ${listaNumeros.any(lambdaIsEven)}")
+
+}
+
+fun memberReferences() {
+
+    // Como en Java
+    val listaPersonas = listOf<Person>(
+        Person(name = "Nacho", age = 38, ciudad = "Madrid"),
+        Person(name = "Reme", age = 37, ciudad = "Valencia"),
+        Person(name = "Jose", age = 26, ciudad = "Valladolid"),
+        Person(name = "Marta", age = 48, ciudad = "Zaragoza"),
+        Person(name = "Pablo", age = 26, ciudad = "Cuenca")
+    )
+    println("Oldest person: ${listaPersonas.maxBy(Person::age)}")
+
+    // Function reference: giarda una referencia a una funcion en una variable
+    fun isEven (x : Int) : Boolean = x % 2 == 0
+    //val miFuncionIsEven = isEven -> error compilacion: pueden guardarse lambdas en vars pero no funciones
+
+    // Con los :: (function reference) sí se puede
+    val miFuncionIsEven = ::isEven
+    println("Is even the number: 5?... ${miFuncionIsEven(5)}")
+
+    // Luego pueden usarse también como parámetros
+    val listaNumeros: List<Int> = listOf<Int>(1,3,5,7,9)
+    println("Any even number in list $listaNumeros?... ${listaNumeros.any(::isEven)}")
+
+
+}
+
+fun boundUnboundReferences() {
+
+    class Numero (val name : String, val value : Int) {
+        fun isGreaterThan(maxValue : Int) : Boolean = value > maxValue
+    }
+
+    // Unbound reference: el type de la lambda necesita recibir la clase Numero, no está atada a una instancia concreta
+    val isGreaterLambda1: (Numero, Int) -> Boolean = Numero::isGreaterThan // Lambda: { numero: Numero, maxValue: Int -> numero.isGreaterThan(maxValue) }
+    val miNumeroCinco : Numero = Numero(name = "cinco", value = 5)
+    isGreaterLambda1(miNumeroCinco, 6) // y aqui hay que pasar el objeto como parámetro
+
+    // Bound reference: el type de la lambda NO lleva la clase Numero, sino que está asociada ya a una instancia concreta de esa clase
+    val miNumeroSiete : Numero = Numero(name = "siete", value = 7)
+    val isGreaterLambda2 : (Int) -> Boolean = miNumeroSiete::isGreaterThan // Lambda: { maxValue: Int -> miNumeroSiete.isGreaterThan(maxValue) }
+    isGreaterLambda2(6) // y aqui NO hay que pasar el objeto como parámetro
 
 }
